@@ -1,0 +1,241 @@
+#project
+import webbrowser
+import os
+import smtplib
+import pyttsx3
+import tweepy
+import requests
+import pygame
+from geopy.gecoders import Nominatim
+import sys
+
+
+# Function to open Notepad
+def open_notepad():
+        os.system("notepad.exe")
+
+# Function to open Chrome
+def open_chrome():
+        webbrowser.open("https://www.google.com")
+
+# Function to open WhatsApp
+def open_whatsapp():
+        pywhatkit.sendwhatmsg_instantly("....","hii")
+        pywhatkit.sendwhatmsg("......","hiii",1,0.1,2,True)
+# Function to send an email
+def send_email():
+    # Add your email sending logic here
+        fromaddr = '......................'  
+        toaddrs  = '......................'  
+        msg = 'Spam email Test'  
+
+        username = '.....'  
+        password = '893858'
+
+        server = smtplib.SMTP('smtp.gmail.com', 587)  
+        server.ehlo()
+        server.starttls()
+        server.login(username, password)  
+        server.sendmail("......", ".......", msg)  
+        server.quit()
+
+
+# Function to send an SMS
+def send_sms():
+        resp=requests.post("https://textbelt.com/text",{
+            'phone':'.....',
+            'message':'.....',
+            'key':'textbelt_test'
+        })
+        print(resp.json())
+
+# Function to get geolocation
+def get_geolocation():
+        # Create a geolocator object using Nominatim
+            geolocator = Nominatim(user_agent="my_geolocation_app")
+
+        # Get the current location using the geolocator
+            location = geolocator.geocode("kavali,Andhra pradesh")
+
+            print("Current Location:")
+            print(f"Latitude: {location.latitude}")
+            print(f"Longitude: {location.longitude}")
+            print(f"Address: {location.address}")
+
+    
+
+# Function to retrieve current Twitter trends
+def get_twitter_trends():
+
+# Set your Twitter API credentials
+        consumer_key = "your_consumer_key"
+        consumer_secret = "your_consumer_secret"
+        access_token = "your_access_token"
+        access_token_secret = "your_access_token_secret"
+
+    # Authenticate with Twitter API
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
+        api = tweepy.API(auth)
+
+    # Get the location ID for worldwide trends (you can change this for other locations)
+        woeid = 1  # Worldwide WOEID
+
+    # Get the trending topics for the specified location
+        trends = api.get_place_trends(id=woeid)
+
+    # Extract and print the trending topics
+        if trends:
+            print("Trending Topics:")
+            for trend in trends[0]["trends"]:
+                print(trend["name"])
+        else:
+            print("Unable to fetch trending topics.")
+    # Function to get top 10 posts of a hashtag on Twitter
+def get_hashtag_posts():
+        # Add your Twitter API logic here
+
+# Set your Twitter API credentials
+        consumer_key = "your_consumer_key"
+        consumer_secret = "your_consumer_secret"
+        access_token = "your_access_token"
+        access_token_secret = "your_access_token_secret"
+
+        # Authenticate with Twitter API
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
+        api = tweepy.API(auth)
+
+        def get_tweets_by_hashtag(hashtag, count=10):
+            try:
+                # Search for tweets containing the specified hashtag
+                tweets = api.search(q=hashtag, count=count)
+
+                # Print the tweets
+                print(f"Recent tweets with #{hashtag}:")
+                for tweet in tweets:
+                    print(f"{tweet.user.screen_name}: {tweet.text}")
+                    print("-" * 50)
+
+            except tweepy.TweepError as e:
+                print(f"Error: {e}")
+
+        if _name_ == "_main_":
+            hashtag_to_search = "your_hashtag"  # Replace with the hashtag you want to search for
+            get_tweets_by_hashtag(hashtag_to_search)
+
+# Function to get data from a Wikipedia page
+def get_wikipedia_data():
+        wikipedia.summary("Python (programming language)")
+        wikipedia.page("Python (programming language)").content
+
+# Function to play audio
+def play_audio():
+    # Add your audio player logic here
+        pygame.init()
+
+        try:
+            pygame.mixer.init()
+            pygame.mixer.music.load(file_path)
+            pygame.mixer.music.play()
+
+            while pygame.mixer.music.get_busy():
+                pygame.time.Clock().tick(10)
+
+        except pygame.error as e:
+            print(f"Error: {e}")
+        finally:
+            pygame.mixer.quit()
+            pygame.quit()
+
+    if _name_ == "_main_":
+        audio_file_path = "path/to/your/audio/file.mp3"  # Replace with the path to your audio file
+        play_audio(audio_file_path)
+    
+
+# Function to play video
+def play_video():
+    # Add your video player logic here
+        pygame.init()
+
+        try:
+            pygame.display.set_caption("Video Player")
+            screen = pygame.display.set_mode((800, 600))
+            clock = pygame.time.Clock()
+
+            # Create a video object
+            video = pygame.movie.Movie(file_path)
+            video_screen = pygame.Surface(video.get_size()).convert()
+
+            video.set_display(video_screen)
+            video.play()
+
+            playing = True
+
+            while playing:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        playing = False
+
+                screen.blit(video_screen, (0, 0))
+                pygame.display.flip()
+                clock.tick(30)
+
+                if not video.get_busy():
+                    playing = False
+
+        except pygame.error as e:
+            print(f"Error: {e}")
+        finally:
+            pygame.quit()
+
+    if _name_ == "_main_":
+        video_file_path = "path/to/your/video/file.mp4"  # Replace with the path to your video file
+        play_video(video_file_path)
+
+# Function to control speaker sound while speaking text
+def speak_text():
+    # Add your text-to-speech logic here
+        speaker= pyttsx3.init()
+        speaker.say("hello i am rohini")
+        speaker.runAndWait()
+
+# Main menu
+def main_menu():
+    while True:
+        print("1. Notepad\n2. Chrome\n3. WhatsApp\n4. Email\n5. SMS\n6. Geolocation\n7. Twitter Trends\n"
+              "8. Hashtag Posts\n9. Wikipedia Data\n10. Audio Player\n11. Video Player\n12. Text-to-Speech\n0. Exit")
+        choice = input("Enter your choice (0-13): ")
+
+        if choice == '1':
+            open_notepad()
+        elif choice == '2':
+            open_chrome()
+        elif choice == '3':
+            open_whatsapp()
+        elif choice == '4':
+            send_email()
+        elif choice == '5':
+            send_sms()
+        elif choice == '6':
+            get_geolocation()
+        elif choice == '7':
+            get_twitter_trends()
+        elif choice == '8':
+            get_hashtag_posts()
+        elif choice == '9':
+            get_wikipedia_data()
+        elif choice == '10':
+            play_audio()
+        elif choice == '11':
+            play_video()
+        elif choice == '12':
+            speak_text()
+        elif choice == '0':
+            print("Exiting the program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter a number between 0 and 12.")
+
+if _name_ == "_main_":
+    main_menu()
